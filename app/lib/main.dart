@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -102,8 +103,11 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
+
+            context.watch<Counter>().loading ?
+            const CircularProgressIndicator():
             Text(
-              '${context.watch<Counter>().get()}',
+              '${context.watch<Counter>().count}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
@@ -115,18 +119,5 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
-}
-
-class Counter with ChangeNotifier{
-  int _count = 0;
-
-  int get(){
-    return _count;
-  }
-
-  void increment(){
-    _count++;
-    notifyListeners();
   }
 }
